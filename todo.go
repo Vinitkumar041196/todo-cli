@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"time"
+
+	"github.com/fatih/color"
+	"github.com/rodaine/table"
 )
 
 type Todo struct {
@@ -66,6 +69,25 @@ func (t *TodoData) delete(index int) error {
 }
 
 func (t *TodoData) list() error {
-	fmt.Printf("+%v\n", t.Todos)
+	tbl := table.New("#", "Completed", "Title", "Created At", "Updated At").WithHeaderFormatter(
+		color.New(color.FgGreen, color.Underline).SprintfFunc(),
+	).WithFirstColumnFormatter(
+		color.New(color.FgYellow).SprintfFunc(),
+	)
+
+	for i, todo := range t.Todos {
+		index := fmt.Sprint(i + 1)
+		completed := "❌"
+		if todo.Completed {
+			completed = "✅"
+		}
+		updatedAt := "-"
+		if !todo.UpdatedAt.IsZero() {
+			updatedAt = todo.UpdatedAt.Format("2006-01-02 03:04:05PM")
+		}
+		tbl.AddRow(index, completed, todo.Title, todo.CreatedAt.Format("2006-01-02 03:04:05PM"), updatedAt)
+	}
+
+	tbl.Print()
 	return nil
 }
