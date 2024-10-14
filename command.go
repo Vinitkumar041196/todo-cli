@@ -6,30 +6,41 @@ import (
 	"os"
 )
 
-func parseSubFlags() (int, string) {
+func parseSubFlags() (int, string, error) {
 	var index int
 	var title string
-	subcommands := flag.NewFlagSet("modify", flag.ExitOnError)
+	subcommands := flag.NewFlagSet("", flag.ExitOnError)
 	subcommands.IntVar(&index, "index", -1, "Index of todo")
 	subcommands.StringVar(&title, "title", "", "New title for todo as a string")
-	subcommands.Parse(os.Args[2:])
-	return index, title
+	err := subcommands.Parse(os.Args[2:])
+	return index, title, err
 }
 
 func Execute(data *TodoData) error {
 	switch os.Args[1] {
 	case "add":
-		_, title := parseSubFlags()
-		data.add(title)
-		return nil
+		_, title, err := parseSubFlags()
+		if err != nil {
+			return err
+		}
+		return data.add(title)
 	case "edit":
-		index, title := parseSubFlags()
+		index, title, err := parseSubFlags()
+		if err != nil {
+			return err
+		}
 		return data.edit(index-1, title)
 	case "delete":
-		index, _ := parseSubFlags()
+		index, _, err := parseSubFlags()
+		if err != nil {
+			return err
+		}
 		return data.delete(index - 1)
 	case "toggle":
-		index, _ := parseSubFlags()
+		index, _, err := parseSubFlags()
+		if err != nil {
+			return err
+		}
 		return data.toggleCompletion(index - 1)
 	case "list":
 		return data.list()

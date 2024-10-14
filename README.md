@@ -5,16 +5,16 @@ Simple Todo management app using json file for persistent storage
 ---
 
 ### Supported Commands and Subcommands
-1. add
-    - -title
-2. edit
-    - -index
-    - -title
-3. toggle
-    - -index
-4. delete
-    - -index
-5. list
+1. add : Add a new todo.
+    - -title : Title of todo
+2. edit : Edit an existing todo
+    - -index : Index of todo
+    - -title : New title of todo
+3. toggle : Toggle the completion status of a todo
+    - -index : Index of todo
+4. delete : Delete an existing todo
+    - -index : Index of todo
+5. list : List all the todos as table
 
 ---
 ## Usage:

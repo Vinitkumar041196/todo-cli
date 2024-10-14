@@ -19,10 +19,6 @@ type TodoData struct {
 	Todos []Todo
 }
 
-func (t *TodoData) add(title string) {
-	t.Todos = append(t.Todos, Todo{Title: title, CreatedAt: time.Now()})
-}
-
 func (t *TodoData) validateIndex(index int) error {
 	if index < 0 || index >= len(t.Todos) {
 		return fmt.Errorf("invalid index")
@@ -30,8 +26,29 @@ func (t *TodoData) validateIndex(index int) error {
 	return nil
 }
 
+func validateTitle(title string) error {
+	if title == "" {
+		return fmt.Errorf("invalid title")
+	}
+	return nil
+}
+func (t *TodoData) add(title string) error {
+	err := validateTitle(title)
+	if err != nil {
+		return err
+	}
+
+	t.Todos = append(t.Todos, Todo{Title: title, CreatedAt: time.Now()})
+	return nil
+}
+
 func (t *TodoData) edit(index int, title string) error {
 	err := t.validateIndex(index)
+	if err != nil {
+		return err
+	}
+
+	err = validateTitle(title)
 	if err != nil {
 		return err
 	}
