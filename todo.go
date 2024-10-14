@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -17,4 +18,25 @@ type TodoData struct {
 
 func (t *TodoData) add(title string) {
 	t.Todos = append(t.Todos, Todo{Title: title, CreatedAt: time.Now()})
+}
+
+func (t *TodoData) validateIndex(index int) error {
+	if index < 0 || index >= len(t.Todos) {
+		return fmt.Errorf("invalid index")
+	}
+	return nil
+}
+
+func (t *TodoData) edit(index int, title string) error {
+	err := t.validateIndex(index)
+	if err != nil {
+		return err
+	}
+
+	todo := t.Todos[index]
+	todo.Title = title
+	todo.UpdatedAt = time.Now()
+	t.Todos[index] = todo
+
+	return nil
 }
