@@ -64,3 +64,8 @@ func (t *TodoData) delete(index int) error {
 	t.Todos = append(t.Todos[:index], t.Todos[index+1:]...)
 	return nil
 }
+
+func (t *TodoData) list() error {
+	fmt.Printf("+%v\n", t.Todos)
+	return nil
+}
