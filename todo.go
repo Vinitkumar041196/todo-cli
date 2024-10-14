@@ -40,3 +40,17 @@ func (t *TodoData) edit(index int, title string) error {
 
 	return nil
 }
+
+func (t *TodoData) toggleCompletion(index int) error {
+	err := t.validateIndex(index)
+	if err != nil {
+		return err
+	}
+
+	todo := t.Todos[index]
+	todo.Completed = !todo.Completed
+	todo.UpdatedAt = time.Now()
+	t.Todos[index] = todo
+
+	return nil
+}
