@@ -54,3 +54,13 @@ func (t *TodoData) toggleCompletion(index int) error {
 
 	return nil
 }
+
+func (t *TodoData) delete(index int) error {
+	err := t.validateIndex(index)
+	if err != nil {
+		return err
+	}
+
+	t.Todos = append(t.Todos[:index], t.Todos[index+1:]...)
+	return nil
+}
