@@ -1,4 +1,4 @@
-module todo-cli
+module github.com/Vinitkumar041196/todo-cli
 
 go 1.22.2
 

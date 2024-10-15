@@ -84,7 +84,7 @@ func (t *TodoData) delete(index int) error {
 
 func (t *TodoData) list() error {
 	data := [][]interface{}{
-		{"#", "Completed", "Title", "Created At", "Updated At"},
+		{"#", "Status", "Title", "Created At", "Updated At"},
 	}
 
 	completedCount := 0
@@ -104,7 +104,7 @@ func (t *TodoData) list() error {
 		data = append(data, []interface{}{fmt.Sprint(i + 1), completed, todo.Title, todo.CreatedAt.Format("2006-01-02 03:04:05PM"), updatedAt})
 	}
 
-	data = append(data, []interface{}{"", "Tasks Completed", fmt.Sprintf("%d/%d", completedCount, len(t.Todos))})
+	data = append(data, []interface{}{"", "", "", "Tasks Completed", fmt.Sprintf("%d/%d", completedCount, len(t.Todos))})
 
 	outStr := formatToTable(data)
 
