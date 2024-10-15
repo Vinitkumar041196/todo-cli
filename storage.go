@@ -11,6 +11,14 @@ type Storage struct {
 }
 
 func NewStorage(fileName string) *Storage {
+	f, err := os.Open(fileName)
+	f.Close()
+
+	if err != nil {
+		f, _ := os.Create(fileName)
+		f.Close()
+	}
+
 	return &Storage{fileName: fileName}
 }
 
@@ -20,6 +28,7 @@ func (s *Storage) LoadData(data *TodoData) error {
 		log.Println(err)
 		return err
 	}
+
 	if len(byt) > 0 {
 		err = json.Unmarshal(byt, &data.Todos)
 		if err != nil {

@@ -3,8 +3,10 @@ package main
 import "log"
 
 func main() {
+	log.SetFlags(log.Lshortfile | log.Ldate)
+
 	data := new(TodoData)
-	storage := NewStorage("data/todo.json")
+	storage := NewStorage("todo.json")
 
 	err := storage.LoadData(data)
 	if err != nil {
