@@ -4,7 +4,7 @@ import "log"
 
 func main() {
 	data := new(TodoData)
-	storage := NewStorage("todo.json")
+	storage := NewStorage("data/todo.json")
 
 	err := storage.LoadData(data)
 	if err != nil {

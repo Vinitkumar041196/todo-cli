@@ -11,7 +11,9 @@ func parseSubFlags() (int, string, error) {
 	var title string
 	subcommands := flag.NewFlagSet("", flag.ExitOnError)
 	subcommands.IntVar(&index, "index", -1, "Index of todo")
+	subcommands.IntVar(&index, "i", -1, "Index of todo")
 	subcommands.StringVar(&title, "title", "", "New title for todo as a string")
+	subcommands.StringVar(&title, "t", "", "New title for todo as a string")
 	err := subcommands.Parse(os.Args[2:])
 	return index, title, err
 }
