@@ -2,6 +2,9 @@
 
 Simple Todo management app using json file for persistent storage
 
+![Output 1](out/1.png)
+![Output 2](out/2.png)
+
 ---
 
 ### Supported Commands and Subcommands
@@ -67,3 +70,4 @@ todo-cli delete -index 1
 ```
 todo-cli list
 ```
+
