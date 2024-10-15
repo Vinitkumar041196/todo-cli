@@ -87,19 +87,28 @@ func (t *TodoData) list() error {
 		{"#", "Completed", "Title", "Created At", "Updated At"},
 	}
 
+	completedCount := 0
 	for i, todo := range t.Todos {
-		index := fmt.Sprint(i + 1)
+
 		completed := "❌"
 		if todo.Completed {
 			completed = "✅"
+			completedCount++
 		}
+
 		updatedAt := "-"
 		if !todo.UpdatedAt.IsZero() {
 			updatedAt = todo.UpdatedAt.Format("2006-01-02 03:04:05PM")
 		}
-		data = append(data, []interface{}{index, completed, todo.Title, todo.CreatedAt.Format("2006-01-02 03:04:05PM"), updatedAt})
+
+		data = append(data, []interface{}{fmt.Sprint(i + 1), completed, todo.Title, todo.CreatedAt.Format("2006-01-02 03:04:05PM"), updatedAt})
 	}
-	FormatToTable(data)
+
+	data = append(data, []interface{}{"", "Task Completed", fmt.Sprintf("%d/%d", completedCount, len(t.Todos))})
+
+	outStr := formatToTable(data)
+
+	fmt.Println("\n\n" + outStr + "\n\n")
 
 	return nil
 }
