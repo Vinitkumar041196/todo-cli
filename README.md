@@ -19,7 +19,12 @@ Simple Todo management app using json file for persistent storage
     - -index or -i : Index of todo
 5. list : List all the todos as table
 
+You can pass an optional flag -o for the command 1-4 to automatically print the output the given execution.
+
+e.g. ./todo-cli add -t "new title" -o
+
 ---
+
 ## Usage:
 
 Build from source code:

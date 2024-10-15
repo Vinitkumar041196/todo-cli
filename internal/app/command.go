@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"flag"
@@ -6,46 +6,39 @@ import (
 	"os"
 )
 
-func parseSubFlags() (int, string, error) {
+func parseSubFlags() (int, string, bool, error) {
 	var index int
 	var title string
+	var autoPrint bool
 	subcommands := flag.NewFlagSet("", flag.ExitOnError)
 	subcommands.IntVar(&index, "index", -1, "Index of todo")
 	subcommands.IntVar(&index, "i", -1, "Index of todo")
 	subcommands.StringVar(&title, "title", "", "New title for todo as a string")
 	subcommands.StringVar(&title, "t", "", "New title for todo as a string")
+	subcommands.BoolVar(&autoPrint, "o", false, "Automatically print latest todo table")
 	err := subcommands.Parse(os.Args[2:])
-	return index, title, err
+	return index, title, autoPrint, err
 }
 
-func Execute(data *TodoData) error {
+func (a *App) Execute() error {
+	index, title, autoPrint, err := parseSubFlags()
+	if err != nil {
+		return err
+	}
+
+	a.setAutoPrint(autoPrint)
+
 	switch os.Args[1] {
 	case "add":
-		_, title, err := parseSubFlags()
-		if err != nil {
-			return err
-		}
-		return data.add(title)
+		return a.add(title)
 	case "edit":
-		index, title, err := parseSubFlags()
-		if err != nil {
-			return err
-		}
-		return data.edit(index-1, title)
+		return a.edit(index-1, title)
 	case "delete":
-		index, _, err := parseSubFlags()
-		if err != nil {
-			return err
-		}
-		return data.delete(index - 1)
+		return a.delete(index - 1)
 	case "toggle":
-		index, _, err := parseSubFlags()
-		if err != nil {
-			return err
-		}
-		return data.toggleCompletion(index - 1)
+		return a.toggleCompletion(index - 1)
 	case "list":
-		return data.list()
+		return a.list()
 	default:
 		return fmt.Errorf("invalid command %v", os.Args[1])
 	}

@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"github.com/jedib0t/go-pretty/v6/table"

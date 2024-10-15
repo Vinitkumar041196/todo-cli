@@ -1,16 +1,18 @@
-package main
+package storage
 
 import (
 	"encoding/json"
 	"log"
 	"os"
+
+	"github.com/Vinitkumar041196/todo-cli/internal/types"
 )
 
-type Storage struct {
+type FileStorage struct {
 	fileName string
 }
 
-func NewStorage(fileName string) *Storage {
+func NewStorage(fileName string) Storage {
 	f, err := os.Open(fileName)
 	f.Close()
 
@@ -19,28 +21,30 @@ func NewStorage(fileName string) *Storage {
 		f.Close()
 	}
 
-	return &Storage{fileName: fileName}
+	return &FileStorage{fileName: fileName}
 }
 
-func (s *Storage) LoadData(data *TodoData) error {
+func (s *FileStorage) LoadData() ([]types.Todo, error) {
 	byt, err := os.ReadFile(s.fileName)
 	if err != nil {
 		log.Println(err)
-		return err
+		return nil, err
 	}
 
+	data := []types.Todo{}
 	if len(byt) > 0 {
-		err = json.Unmarshal(byt, &data.Todos)
+		err = json.Unmarshal(byt, &data)
 		if err != nil {
 			log.Println(err)
-			return err
+			return nil, err
 		}
 	}
-	return nil
+
+	return data, nil
 }
 
-func (s *Storage) SaveData(data *TodoData) error {
-	byt, err := json.MarshalIndent(data.Todos, "", "	")
+func (s *FileStorage) SaveData(data []types.Todo) error {
+	byt, err := json.MarshalIndent(data, "", "	")
 	if err != nil {
 		log.Println(err)
 		return err

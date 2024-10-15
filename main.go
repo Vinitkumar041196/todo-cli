@@ -1,24 +1,29 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/Vinitkumar041196/todo-cli/internal/app"
+	"github.com/Vinitkumar041196/todo-cli/internal/storage"
+)
 
 func main() {
 	log.SetFlags(log.Lshortfile | log.Ldate)
 
-	data := new(TodoData)
-	storage := NewStorage("todo.json")
+	storage := storage.NewStorage("todo.json")
+	app := app.NewApp(storage)
 
-	err := storage.LoadData(data)
+	err := app.LoadData()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = Execute(data)
+	err = app.Execute()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = storage.SaveData(data)
+	err = app.SaveData()
 	if err != nil {
 		log.Fatal(err)
 	}
