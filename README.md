@@ -19,38 +19,51 @@ Simple Todo management app using json file for persistent storage
 ---
 ## Usage:
 
-```
-go build -o todo .
+Build from source code:
 
-./todo <command> -<subcommand1> val1 -<subcommand2> val2
 ```
+go build -o todo-cli .
+
+./todo-cli <command> -<flag1> val1 -<flag2> val2
+```
+
+OR
+
+Install it as binary
+
+```
+go install github.com/Vinitkumar041196/todo-cli@latest
+
+todo-cli <command> -<flag1> val1 -<flag2> val2
+```
+
 
 1. To add a new todo.
 
 ```
-./todo add -title "Todo 1"
+todo-cli add -title "Todo 1"
 ```
 
 2. To edit a todo.
 
 ```
-./todo edit -index 1 -title "Todo 1 updated"
+todo-cli edit -index 1 -title "Todo 1 updated"
 ```
 
 3. To toggle completion status of todo.
 
 ```
-./todo toggle -index 1
+todo-cli toggle -index 1
 ```
 
 4. To delete a todo.
 
 ```
-./todo delete -index 1
+todo-cli delete -index 1
 ```
 
 5. To list all todos.
 
 ```
-./todo list
+todo-cli list
 ```
