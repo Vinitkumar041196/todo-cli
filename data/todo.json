@@ -6,10 +6,10 @@
 		"updated_at": "2024-10-15T08:49:59.431131148+01:00"
 	},
 	{
-		"completed": false,
+		"completed": true,
 		"title": "todo2",
 		"created_at": "2024-10-15T08:20:17.334986007+01:00",
-		"updated_at": "0001-01-01T00:00:00Z"
+		"updated_at": "2024-10-15T09:07:07.184862534+01:00"
 	},
 	{
 		"completed": false,
